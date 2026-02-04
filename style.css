@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Poppins:wght@300;400;700;900&display=swap');
+
+:root {
+    --bg: #050505;
+    --accent: #00f2ff;
+    --card: #0f0f0f;
+    --border: #1a1a1a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body { background: var(--bg); color: white; font-family: 'Poppins', sans-serif; }
+
+section.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10%;
+}
+
+.hero span { font-family: 'Fira Code', monospace; color: var(--accent); font-size: 0.9rem; }
+.hero h1 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; line-height: 1; margin: 15px 0; }
+.hero p { max-width: 600px; color: #888; font-size: 1.1rem; margin-bottom: 30px; }
+
+.btn {
+    background: var(--accent); color: #000; padding: 15px 35px; border-radius: 5px; 
+    text-decoration: none; font-weight: 700; width: fit-content; transition: 0.3s;
+}
+.btn:hover { box-shadow: 0 0 20px rgba(0, 242, 255, 0.4); }
+
+section.stack { padding: 100px 10%; border-top: 1px solid var(--border); }
+.grid-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+
+.card { background: var(--card); border: 1px solid var(--border); padding: 30px; border-radius: 10px; }
+.card h3 { color: var(--accent); font-family: 'Fira Code', monospace; font-size: 1rem; margin-bottom: 10px; }
+.card p { font-size: 0.9rem; color: #777; }
+
+section.work { padding: 100px 10%; }
+.bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.box { 
+    background: var(--card); border: 1px solid var(--border); height: 250px; 
+    border-radius: 10px; padding: 30px; display: flex; flex-direction: column; 
+    justify-content: flex-end; cursor: pointer; transition: 0.3s;
+}
+.box:hover { border-color: var(--accent); transform: translateY(-5px); }
+.lg { grid-column: span 2; }
+
+#modal { display: none; position: fixed; inset: 0; background: #000; z-index: 999; padding: 40px; }
+.galeria { display: flex; gap: 20px; overflow-x: auto; height: 80%; align-items: center; scroll-snap-type: x mandatory; }
+.galeria img { flex: 0 0 100%; max-height: 100%; object-fit: contain; scroll-snap-align: center; }
+.galeria::-webkit-scrollbar { display: none; }
+
+.nav { display: flex; justify-content: space-between; margin-top: 30px; }
+.nav button, .btn-fechar { background: none; border: 1px solid #333; color: white; padding: 10px 20px; cursor: pointer; transition: 0.3s; }
+.nav button:hover, .btn-fechar:hover { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 800px) { .bento { grid-template-columns: 1fr; } .lg { grid-column: span 1; } }

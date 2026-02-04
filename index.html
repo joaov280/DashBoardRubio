@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>João V Rubio | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Poppins:wght@300;400;700;900&display=swap');
+
+        :root {
+            --bg: #030303;
+            --accent: #00f2ff;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
+
+        /* --- BACKGROUND ULTRA EFEITOS --- */
+        .bg-wrapper { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #000; }
+        .bg-grid {
+            position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
+            background-image: linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px; transform: perspective(500px) rotateX(60deg);
+            animation: moveGrid 15s linear infinite;
+        }
+        .glow {
+            position: absolute; width: 40vw; height: 40vw; border-radius: 50%;
+            filter: blur(120px); opacity: 0.2; background: var(--accent);
+            animation: float 8s infinite alternate;
+        }
+        .glow-2 { right: -5%; bottom: -5%; background: #8000ff; animation-delay: -4s; }
+
+        @keyframes moveGrid { from { transform: perspective(500px) rotateX(60deg) translateY(0); } to { transform: perspective(500px) rotateX(60deg) translateY(50px); } }
+        @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(100px, 100px); } }
+
+        /* --- HERO --- */
+        section.hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; }
+        .hero span { font-family: 'Fira Code'; color: var(--accent); text-transform: uppercase; letter-spacing: 4px; }
+        .hero h1 { font-size: clamp(3.5rem, 12vw, 6rem); font-weight: 900; line-height: 1; margin: 10px 0; text-shadow: 0 0 20px rgba(0,242,255,0.3); }
+        .hero p { max-width: 650px; font-size: 1.1rem; color: #bbb; line-height: 1.6; margin-bottom: 30px; }
+        .hero b { color: var(--accent); }
+
+        .stack-list { display: flex; gap: 25px; align-items: center; }
+        .stack-list i { font-size: 2.8rem; color: #444; transition: 0.4s; cursor: pointer; }
+        .stack-list i:hover { color: var(--accent); transform: scale(1.2) translateY(-5px); filter: drop-shadow(0 0 10px var(--accent)); }
+
+        /* --- BENTO GRID --- */
+        section.work { padding: 0 10% 100px; }
+        .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 300px); gap: 25px; }
+        
+        .bento-item {
+            background: rgba(15, 15, 15, 0.4); backdrop-filter: blur(15px);
+            border: 1px solid var(--border); border-radius: 32px; padding: 40px;
+            position: relative; overflow: hidden; display: flex; flex-direction: column;
+            justify-content: flex-end; transition: 0.5s; cursor: pointer;
+        }
+        .bento-item:hover { border-color: var(--accent); transform: translateY(-10px); box-shadow: 0 10px 40px rgba(0, 242, 255, 0.1); }
+        
+        .item-1 { grid-column: span 2; grid-row: span 2; }
+        .item-2 { grid-column: span 2; }
+
+        .bento-item span { color: var(--accent); font-family: 'Fira Code'; font-size: 0.75rem; letter-spacing: 2px; }
+        .bento-item h3 { font-size: 1.8rem; margin-top: 5px; }
+        .bento-item i.bg-icon { position: absolute; right: -20px; top: -20px; font-size: 12rem; opacity: 0.03; transition: 0.5s; }
+        .bento-item:hover i.bg-icon { opacity: 0.1; transform: rotate(-10deg); }
+
+        /* --- MODAL --- */
+        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; padding: 20px; }
+        .m-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; flex-direction: column; }
+        .galeria-wrapper { position: relative; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        .galeria { display: flex; width: 100%; height: 85vh; overflow: hidden; scroll-behavior: smooth; }
+        .galeria img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; }
+
+        .seta {
+            position: absolute; width: 60px; height: 60px; border-radius: 50%;
+            background: rgba(0, 242, 255, 0.1); border: 1px solid var(--accent); color: #fff;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+            cursor: pointer; transition: 0.3s; z-index: 2010; backdrop-filter: blur(5px);
+        }
+        .seta:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
+        .seta-esq { left: 20px; } .seta-dir { right: 20px; }
+
+        @media (max-width: 1000px) {
+            .bento { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .item-1, .item-2 { height: 350px; }
+            .seta { width: 50px; height: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-wrapper">
+        <div class="bg-grid"></div>
+        <div class="glow"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <section class="hero">
+        <span>// DEVELOPER & DATA ANALYST</span>
+        <h1>JOÃO VITOR<br>RUBIO</h1>
+        <p>Tenho <b>17 anos</b> e sou apaixonado por tecnologia desde criança. Formado pelo <b>SENAI</b> em análise de dados, crio dashboards em Power BI com nível de design muito acima da média. Estudando <b>C#, Python e JS</b>.</p>
+        
+        <div class="stack-list">
+            <i class="devicon-csharp-plain" title="C#"></i>
+            <i class="devicon-python-plain" title="Python"></i>
+            <i class="devicon-javascript-plain" title="JavaScript"></i>
+            <i class="fa-solid fa-chart-column" title="Power BI"></i>
+            <i class="fa-brands fa-linkedin" onclick="window.open('https://www.linkedin.com/in/joao-vitor-rubio-a0103629b/')" title="LinkedIn"></i>
+        </div>
+    </section>
+
+    <section class="work">
+        <div class="bento">
+            <div class="bento-item item-1" onclick="abrir('Hospital dos Anjos', ['DashBoardHP.png', 'DashBoardHP2.png', 'DashBoardHPFarm.png', 'DashBoardHPrh.png' ])">
+                <i class="fa-solid fa-hospital-user bg-icon"></i>
+                <span>DATA ANALYSIS | POWER BI</span>
+                <h3>Hospital dos Anjos</h3>
+            </div>
+
+            <div class="bento-item item-2" onclick="abrir('Bankoo Financial', ['DashBoardBankoo.png', 'DashBoardBankooGerentes.png'])">
+                <i class="fa-solid fa-wallet bg-icon"></i>
+                <span>DATA ANALYSIS | POWER BI</span>
+                <h3>Bankoo Finance</h3>
+            </div>
+
+            <div class="bento-item item-3" onclick="abrir('Global Sales', ['DashBoardGeral.png', 'DashBoardGeralcliente.png', 'DashBoardGeralatt.png', 'DashBoardGeralcurso.png', 'DashBoardGeralVendas.png', 'DashBoardGeralatrasada.png'])">
+                <i class="fa-solid fa-chart-line bg-icon"></i>
+                <span>DATA ANALYSIS | POWER BI</span>
+                <h3>Global Sales</h3>
+            </div>
+
+            <div class="bento-item item-4" onclick="window.open('https://www.linkedin.com/in/joao-vitor-rubio-a0103629b/', '_blank')">
+                <i class="fa-brands fa-linkedin-in bg-icon"></i>
+                <span>GET IN TOUCH</span>
+                <h3>LinkedIn</h3>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal">
+        <div class="m-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px;">
+                <h2 id="m-titulo" style="font-weight: 900; color: var(--accent);"></h2>
+                <button onclick="fechar()" style="background:var(--accent); border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:bold; color: #000;">FECHAR</button>
+            </div>
+            <div class="galeria-wrapper">
+                <button class="seta seta-esq" onclick="voltar()"><i class="fa-solid fa-chevron-left"></i></button>
+                <div id="m-galeria" class="galeria"></div>
+                <button class="seta seta-dir" onclick="avancar()"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const galeria = document.getElementById('m-galeria');
+
+        function abrir(titulo, fotos) {
+            document.getElementById('m-titulo').innerText = titulo;
+            galeria.innerHTML = '';
+            fotos.forEach(src => {
+                const img = document.createElement('img');
+                img.src = 'assets/' + src;
+                galeria.appendChild(img);
+            });
+            document.getElementById('modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => { galeria.scrollLeft = 0; }, 10);
+        }
+
+        function fechar() {
+            document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function avancar() { galeria.scrollBy({ left: galeria.clientWidth, behavior: 'smooth' }); }
+        function voltar() { galeria.scrollBy({ left: -galeria.clientWidth, behavior: 'smooth' }); }
+
+        window.addEventListener('keydown', (e) => { 
+            if(e.key === 'Escape') fechar();
+            if(e.key === 'ArrowRight') avancar();
+            if(e.key === 'ArrowLeft') voltar();
+        });
+    </script>
+</body>
+</html>
