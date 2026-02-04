@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>João V Rubio | Portfolio</title>
+    <title>João Vitor Rubio | Portfolio</title>
+    
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
@@ -13,87 +16,114 @@
         :root {
             --bg: #030303;
             --accent: #00f2ff;
-            --card-bg: rgba(255, 255, 255, 0.03);
+            --react: #61dafb;
             --border: rgba(255, 255, 255, 0.1);
+            --wpp: #25d366;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body { background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; overflow-x: hidden; }
 
-        /* --- BACKGROUND ULTRA EFEITOS --- */
+        /* --- BACKGROUND DINÂMICO --- */
         .bg-wrapper { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: #000; }
         .bg-grid {
             position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
             background-image: linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px), 
                               linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
             background-size: 50px 50px; transform: perspective(500px) rotateX(60deg);
-            animation: moveGrid 15s linear infinite;
+            animation: moveGrid 20s linear infinite;
         }
         .glow {
-            position: absolute; width: 40vw; height: 40vw; border-radius: 50%;
-            filter: blur(120px); opacity: 0.2; background: var(--accent);
-            animation: float 8s infinite alternate;
+            position: absolute; width: 50vw; height: 50vw; border-radius: 50%;
+            filter: blur(120px); opacity: 0.12; background: var(--accent);
+            animation: floatGlow 15s infinite alternate ease-in-out;
         }
-        .glow-2 { right: -5%; bottom: -5%; background: #8000ff; animation-delay: -4s; }
+        .glow-2 { background: #8000ff; right: -10%; bottom: -10%; animation-delay: -5s; }
 
         @keyframes moveGrid { from { transform: perspective(500px) rotateX(60deg) translateY(0); } to { transform: perspective(500px) rotateX(60deg) translateY(50px); } }
-        @keyframes float { 0% { transform: translate(0,0); } 100% { transform: translate(100px, 100px); } }
+        @keyframes floatGlow { 0% { transform: translate(-10%, -10%) scale(1); } 100% { transform: translate(20%, 20%) scale(1.2); } }
+
+        /* --- ANIMAÇÃO REVEAL --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* --- HERO --- */
-        section.hero { height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; }
-        .hero span { font-family: 'Fira Code'; color: var(--accent); text-transform: uppercase; letter-spacing: 4px; }
-        .hero h1 { font-size: clamp(3.5rem, 12vw, 6rem); font-weight: 900; line-height: 1; margin: 10px 0; text-shadow: 0 0 20px rgba(0,242,255,0.3); }
-        .hero p { max-width: 650px; font-size: 1.1rem; color: #bbb; line-height: 1.6; margin-bottom: 30px; }
-        .hero b { color: var(--accent); }
+        section.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; position: relative; z-index: 20; }
+        .hero span { font-family: 'Fira Code'; color: var(--accent); text-transform: uppercase; letter-spacing: 4px; font-size: 0.9rem; margin-bottom: 10px; }
+        .hero h1 { font-size: clamp(3rem, 10vw, 5.5rem); font-weight: 900; line-height: 0.9; margin: 10px 0; letter-spacing: -3px; }
+        .hero h1 b { color: var(--accent); text-shadow: 0 0 30px rgba(0,242,255,0.4); }
+        .hero p { max-width: 750px; font-size: 1.2rem; color: #bbb; line-height: 1.6; margin: 25px 0 40px; }
+        .hero p b { color: var(--accent); }
+        
+        .btn-group { display: flex; gap: 20px; flex-wrap: wrap; }
+        
+        .btn-main {
+            padding: 16px 35px; background: var(--accent); color: #000;
+            text-decoration: none; font-weight: 900; border-radius: 15px; text-transform: uppercase;
+            letter-spacing: 1px; transition: 0.4s; box-shadow: 0 0 25px rgba(0, 242, 255, 0.3);
+            display: flex; align-items: center; gap: 10px; border: none; cursor: pointer;
+        }
+        .btn-main:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--accent); }
+        
+        .btn-outline {
+            padding: 16px 35px; background: transparent; color: #fff;
+            text-decoration: none; font-weight: 700; border-radius: 15px;
+            border: 1px solid var(--border); transition: 0.4s; display: flex; align-items: center; gap: 10px;
+        }
+        .btn-outline:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.05); }
 
-        .stack-list { display: flex; gap: 25px; align-items: center; }
-        .stack-list i { font-size: 2.8rem; color: #444; transition: 0.4s; cursor: pointer; }
-        .stack-list i:hover { color: var(--accent); transform: scale(1.2) translateY(-5px); filter: drop-shadow(0 0 10px var(--accent)); }
+        /* --- STACK ICONS --- */
+        .stack-list { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; margin-top: 50px; padding-top: 30px; border-top: 1px solid var(--border); }
+        .stack-list i { font-size: 2.5rem; color: #fff; filter: drop-shadow(0 0 5px var(--accent)); transition: 0.4s; cursor: pointer; opacity: 0.7; }
+        .stack-list i:hover { opacity: 1; transform: scale(1.3) translateY(-10px); color: var(--accent); filter: drop-shadow(0 0 20px var(--accent)); }
 
         /* --- BENTO GRID --- */
-        section.work { padding: 0 10% 100px; }
-        .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 300px); gap: 25px; }
+        section.work { padding: 100px 10% 150px; position: relative; z-index: 20; }
+        .section-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 50px; text-align: center; }
+        .bento { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); grid-auto-rows: 350px; gap: 30px; }
         
         .bento-item {
-            background: rgba(15, 15, 15, 0.4); backdrop-filter: blur(15px);
-            border: 1px solid var(--border); border-radius: 32px; padding: 40px;
+            background: rgba(15, 15, 15, 0.6); backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 40px; padding: 40px;
             position: relative; overflow: hidden; display: flex; flex-direction: column;
-            justify-content: flex-end; transition: 0.5s; cursor: pointer;
+            justify-content: flex-end; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer;
         }
-        .bento-item:hover { border-color: var(--accent); transform: translateY(-10px); box-shadow: 0 10px 40px rgba(0, 242, 255, 0.1); }
-        
-        .item-1 { grid-column: span 2; grid-row: span 2; }
-        .item-2 { grid-column: span 2; }
+        .bento-item:hover { border-color: var(--accent); transform: scale(1.03); box-shadow: 0 20px 50px rgba(0, 242, 255, 0.15); }
+        .bento-item i.bg-icon { position: absolute; right: -20px; top: -20px; font-size: 10rem; opacity: 0.03; transition: 0.5s; }
 
-        .bento-item span { color: var(--accent); font-family: 'Fira Code'; font-size: 0.75rem; letter-spacing: 2px; }
-        .bento-item h3 { font-size: 1.8rem; margin-top: 5px; }
-        .bento-item i.bg-icon { position: absolute; right: -20px; top: -20px; font-size: 12rem; opacity: 0.03; transition: 0.5s; }
-        .bento-item:hover i.bg-icon { opacity: 0.1; transform: rotate(-10deg); }
+        /* --- FLOATING WHATSAPP --- */
+        .wpp-float {
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+            background: var(--wpp); color: #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; z-index: 3000; text-decoration: none;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4); animation: pulseWpp 2s infinite;
+        }
+        @keyframes pulseWpp {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
 
         /* --- MODAL --- */
-        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; padding: 20px; }
-        .m-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; flex-direction: column; }
-        .galeria-wrapper { position: relative; flex-grow: 1; display: flex; align-items: center; justify-content: center; }
-        .galeria { display: flex; width: 100%; height: 85vh; overflow: hidden; scroll-behavior: smooth; }
-        .galeria img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; }
+        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 4000; }
+        .m-container { max-width: 1400px; margin: 0 auto; height: 100%; display: flex; flex-direction: column; padding: 20px; }
+        .galeria { display: flex; width: 100%; height: 85vh; overflow-x: auto; scroll-snap-type: x mandatory; }
+        .galeria img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; scroll-snap-align: center; }
 
-        .seta {
-            position: absolute; width: 60px; height: 60px; border-radius: 50%;
-            background: rgba(0, 242, 255, 0.1); border: 1px solid var(--accent); color: #fff;
-            display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-            cursor: pointer; transition: 0.3s; z-index: 2010; backdrop-filter: blur(5px);
-        }
-        .seta:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent); }
-        .seta-esq { left: 20px; } .seta-dir { right: 20px; }
-
-        @media (max-width: 1000px) {
-            .bento { grid-template-columns: 1fr; grid-template-rows: auto; }
-            .item-1, .item-2 { height: 350px; }
-            .seta { width: 50px; height: 50px; }
+        @media (max-width: 768px) {
+            section.hero { padding: 0 7%; text-align: center; align-items: center; }
+            .btn-group { justify-content: center; }
+            .stack-list { justify-content: center; }
+            .bento { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+
+    <a href="https://wa.me/5514988026614" class="wpp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     <div class="bg-wrapper">
         <div class="bg-grid"></div>
@@ -101,44 +131,63 @@
         <div class="glow glow-2"></div>
     </div>
 
-    <section class="hero">
-        <span>// DEVELOPER & DATA ANALYST</span>
-        <h1>JOÃO VITOR<br>RUBIO</h1>
-        <p>Tenho <b>17 anos</b> e sou apaixonado por tecnologia desde criança. Formado pelo <b>SENAI</b> em análise de dados, crio dashboards em Power BI com nível de design muito acima da média. Estudando <b>C#, Python e JS</b>.</p>
+    <section class="hero reveal">
+        <span>// DATA ANALYST & FULLSTACK DEV</span>
+        <h1>JOÃO VITOR<br><b>RUBIO</b></h1>
         
+        <p>Aos <b>17 anos</b>, projeto o futuro dos dados. Especialista em <b>Dashboards Premium</b> (Formação Leonardo Karpinski/SENAI) e desenvolvedor de ecossistemas com <b>React, Python e C#</b>.</p>
+        
+        <div class="btn-group">
+            <a href="#projetos" class="btn-main">
+                <i class="fa-solid fa-eye"></i> Ver Projetos
+            </a>
+            <a href="https://www.linkedin.com/in/joao-vitor-rubio-a0103629b/" target="_blank" class="btn-outline">
+                <i class="fa-brands fa-linkedin-in"></i> LinkedIn
+            </a>
+            <a href="https://wa.me/5514988026614" target="_blank" class="btn-outline">
+                <i class="fa-solid fa-comment"></i> WhatsApp
+            </a>
+        </div>
+
         <div class="stack-list">
             <i class="devicon-csharp-plain" title="C#"></i>
             <i class="devicon-python-plain" title="Python"></i>
             <i class="devicon-javascript-plain" title="JavaScript"></i>
+            <i class="devicon-react-original" title="React JS"></i>
             <i class="fa-solid fa-chart-column" title="Power BI"></i>
             <i class="fa-brands fa-linkedin" onclick="window.open('https://www.linkedin.com/in/joao-vitor-rubio-a0103629b/')" title="LinkedIn"></i>
         </div>
     </section>
 
-    <section class="work">
+    <section class="work" id="projetos">
+        <h2 class="section-title reveal">PROJETOS EM DESTAQUE</h2>
         <div class="bento">
-            <div class="bento-item item-1" onclick="abrir('Hospital dos Anjos', ['DashBoardHP.png', 'DashBoardHP2.png', 'DashBoardHPFarm.png', 'DashBoardHPrh.png' ])">
+            <div class="bento-item reveal" onclick="window.open('https://joaov280.github.io/rubio-finance/', '_blank')" style="border-color: var(--react)">
+                <i class="devicon-react-original bg-icon"></i>
+                <span style="color: var(--react); font-family: 'Fira Code'; font-size: 0.8rem;">REACT DEVELOPMENT</span>
+                <h3>Rubio Finance</h3>
+                <p>Gestão financeira inteligente com interface de alta performance.</p>
+            </div>
+
+            <div class="bento-item reveal" onclick="abrir('Hospital dos Anjos', ['DashBoardHP.png', 'DashBoardHP2.png', 'DashBoardHPFarm.png', 'DashBoardHPrh.png' ])">
                 <i class="fa-solid fa-hospital-user bg-icon"></i>
-                <span>DATA ANALYSIS | POWER BI</span>
+                <span style="color: var(--accent); font-family: 'Fira Code'; font-size: 0.8rem;">DATA ANALYSIS</span>
                 <h3>Hospital dos Anjos</h3>
+                <p>Monitoramento hospitalar 360º com KPIs críticos e gestão de RH.</p>
             </div>
 
-            <div class="bento-item item-2" onclick="abrir('Bankoo Financial', ['DashBoardBankoo.png', 'DashBoardBankooGerentes.png'])">
+            <div class="bento-item reveal" onclick="abrir('Bankoo Financial', ['DashBoardBankoo.png', 'DashBoardBankooGerentes.png'])">
                 <i class="fa-solid fa-wallet bg-icon"></i>
-                <span>DATA ANALYSIS | POWER BI</span>
+                <span style="color: var(--accent); font-family: 'Fira Code'; font-size: 0.8rem;">BUSINESS INTELLIGENCE</span>
                 <h3>Bankoo Finance</h3>
+                <p>Performance bancária e análise estratégica de gerência.</p>
             </div>
 
-            <div class="bento-item item-3" onclick="abrir('Global Sales', ['DashBoardGeral.png', 'DashBoardGeralcliente.png', 'DashBoardGeralatt.png', 'DashBoardGeralcurso.png', 'DashBoardGeralVendas.png', 'DashBoardGeralatrasada.png'])">
+            <div class="bento-item reveal" onclick="abrir('Global Sales', ['DashBoardGeral.png', 'DashBoardGeralcliente.png', 'DashBoardGeralatt.png', 'DashBoardGeralcurso.png', 'DashBoardGeralVendas.png', 'DashBoardGeralatrasada.png'])">
                 <i class="fa-solid fa-chart-line bg-icon"></i>
-                <span>DATA ANALYSIS | POWER BI</span>
+                <span style="color: var(--accent); font-family: 'Fira Code'; font-size: 0.8rem;">SALES ANALYTICS</span>
                 <h3>Global Sales</h3>
-            </div>
-
-            <div class="bento-item item-4" onclick="window.open('https://www.linkedin.com/in/joao-vitor-rubio-a0103629b/', '_blank')">
-                <i class="fa-brands fa-linkedin-in bg-icon"></i>
-                <span>GET IN TOUCH</span>
-                <h3>LinkedIn</h3>
+                <p>Dashboards de vendas globais e métricas de expansão comercial.</p>
             </div>
         </div>
     </section>
@@ -146,20 +195,28 @@
     <div id="modal">
         <div class="m-container">
             <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px;">
-                <h2 id="m-titulo" style="font-weight: 900; color: var(--accent);"></h2>
+                <h2 id="m-titulo" style="font-weight: 700; color: var(--accent);"></h2>
                 <button onclick="fechar()" style="background:var(--accent); border:none; padding:12px 25px; border-radius:12px; cursor:pointer; font-weight:bold; color: #000;">FECHAR</button>
             </div>
-            <div class="galeria-wrapper">
-                <button class="seta seta-esq" onclick="voltar()"><i class="fa-solid fa-chevron-left"></i></button>
-                <div id="m-galeria" class="galeria"></div>
-                <button class="seta seta-dir" onclick="avancar()"><i class="fa-solid fa-chevron-right"></i></button>
-            </div>
+            <div id="m-galeria" class="galeria"></div>
         </div>
     </div>
 
     <script>
-        const galeria = document.getElementById('m-galeria');
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 150) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
 
+        const galeria = document.getElementById('m-galeria');
         function abrir(titulo, fotos) {
             document.getElementById('m-titulo').innerText = titulo;
             galeria.innerHTML = '';
@@ -170,22 +227,8 @@
             });
             document.getElementById('modal').style.display = 'block';
             document.body.style.overflow = 'hidden';
-            setTimeout(() => { galeria.scrollLeft = 0; }, 10);
         }
-
-        function fechar() {
-            document.getElementById('modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        function avancar() { galeria.scrollBy({ left: galeria.clientWidth, behavior: 'smooth' }); }
-        function voltar() { galeria.scrollBy({ left: -galeria.clientWidth, behavior: 'smooth' }); }
-
-        window.addEventListener('keydown', (e) => { 
-            if(e.key === 'Escape') fechar();
-            if(e.key === 'ArrowRight') avancar();
-            if(e.key === 'ArrowLeft') voltar();
-        });
+        function fechar() { document.getElementById('modal').style.display = 'none'; document.body.style.overflow = 'auto'; }
     </script>
 </body>
 </html>
